@@ -1,3 +1,6 @@
+/** Class for a game of Connect 4. Takes optional height & width numbers
+ * to define the size of the board. Provides default params for height & width.
+ */
 class Game {
   constructor(height = 6, width = 7) {
     this.height = height;
@@ -45,7 +48,7 @@ class Game {
 
   checkForWin() {
 
-    function _win(cells) {
+    const _win = (cells) => {
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
       //  - returns true if all are legal coordinates & all match currPlayer
@@ -60,6 +63,11 @@ class Game {
       );
     }
 
+    // Old method -- Bound context to _win
+    // instead of making it an arrow function.
+    // would call checkCells() on line 79 in place of _win.
+    // const checkCells = _win.bind(this);
+
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         // get "checklist" of 4 cells (starting here) for each of the different
@@ -70,15 +78,13 @@ class Game {
         const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
         // find winner (only checking each win-possibility as needed)
-        const checkCells = _win.bind(this);
-        if (checkCells(horiz) || checkCells(vert) || checkCells(diagDR) || checkCells(diagDL)) {
+        if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
           return true;
         }
       }
     }
     return false;
   }
-
 }
 
 
