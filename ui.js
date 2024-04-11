@@ -1,7 +1,5 @@
 import { Game } from "./connect4.js";
 
-let currGame = new Game();
-
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
@@ -59,9 +57,7 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
-  const { board, currPlayer } = currGame;
-
-  // get x from ID of clicked cell
+    // get x from ID of clicked cell
   const x = Number(evt.target.id.slice("top-".length));
 
   // get next spot in column (if none, ignore click)
@@ -71,16 +67,16 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  board[y][x] = currPlayer;
+  currGame.board[y][x] = currGame.currPlayer;
   placeInTable(y, x);
 
   // check for win
   if (currGame.checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    return endGame(`Player ${currGame.currPlayer} won!`);
   }
 
   // check for tie: if top row is filled, board is filled
-  if (board[0].every(cell => cell !== null)) {
+  if (currGame.board[0].every(cell => cell !== null)) {
     return endGame('Tie!');
   }
 
@@ -89,8 +85,10 @@ function handleClick(evt) {
 
 
 /** Start game. */
+let currGame;
 
 function start() {
+  currGame = new Game();
   makeHtmlBoard();
 }
 
