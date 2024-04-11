@@ -1,59 +1,46 @@
-/** Connect Four
- *
- * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- * column until a player gets four-in-a-row (horiz, vert, or diag) or until
- * board fills (tie).
- */
+class Game {
+  constructor(height = 6, width = 7) {
+    this.height = height;
+    this.width = width;
 
-const WIDTH = 7;
-const HEIGHT = 6;
-
-const gameState = {
-  currPlayer: 1, // active player: 1 or 2
-  board: Array(HEIGHT), // array of HEIGHT number of slots
-  // Each array slot is empty to start, but will be filled in with an array
-  // of WIDTH later.
-  // These inner arrays will represent rows.
-  // gameState.board[HEIGHT][0] represents the bottom-left spot on the board
-};
-
-
-/** switchCurrPlayer:
- *   checks the value of currPlayer and swaps the value to the other
- *   player instance
- */
-
-function switchCurrPlayer() {
-  gameState.currPlayer = gameState.currPlayer === 1 ? 2 : 1;
-}
-
-
-/** makeBoard: fill in global `board`:
- *    board = array of rows, each row is array of cells  (board[y][x])
-*/
-
-function makeBoard() {
-  for (let y = 0; y < HEIGHT; y++) {
-    const emptyRow = Array(WIDTH).fill(null);
-    gameState.board[y] = emptyRow;
+    this.board = this.makeBoard();
+    this.currPlayer = 1;
   }
 
-  // alternatively:
-  // gameState.board = [...gameState.board].map(() => Array(WIDTH).fill(null));
-}
+  /** makeBoard: fill in global `board`:
+  *    board = array of rows, each row is array of cells  (board[y][x])
+  */
+  makeBoard() {
+    const newBoard = [];
 
-
-/** findSpotInCol: given column x, return y coordinate of furthest-down spot
- *    (return null if filled)
- */
-
-function findSpotInCol(x) {
-  for (let y = HEIGHT - 1; y >= 0; y--) {
-    if (gameState.board[y][x] === null) {
-      return y;
+    for (let y = 0; y < this.height; y++) {
+      const emptyRow = Array(this.width).fill(null);
+      newBoard[y] = emptyRow;
     }
+
+    return newBoard;
   }
-  return null;
+
+  /** switchCurrPlayer:
+   *   checks the value of currPlayer and swaps the value to the other
+   *   player instance
+   */
+  switchCurrPlayer() {
+    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+  }
+
+  /** findSpotInCol: given column x, return y coordinate of furthest-down spot
+  * (return null if filled)
+  */
+  findSpotInCol(x) {
+    for (let y = this.height - 1; y >= 0; y--) {
+      if (this.board[y][x] === null) {
+        return y;
+      }
+    }
+    return null;
+  }
+
 }
 
 
