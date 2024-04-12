@@ -1,13 +1,16 @@
-/** Class for a game of Connect 4. Takes optional height & width numbers
- * to define the size of the board. Provides default params for height & width.
+/** Class for a game of Connect 4.
+ * height, width: nums that define size of board. Default params of 6 and 7.
+ * player1, player2: objects holding each player's color for game.
  */
 class Game {
-  constructor(height = 6, width = 7) {
+  constructor(height = 6, width = 7, player1, player2) {
     this.height = height;
     this.width = width;
+    this.player1 = player1;
+    this.player2 = player2;
+    this.currPlayer = player1;
 
     this.board = this.makeBoard();
-    this.currPlayer = 1;
     this.isGameOver = false;
   }
 
@@ -30,7 +33,7 @@ class Game {
    *   player instance
    */
   switchCurrPlayer() {
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === player1 ? player2 : player1;
   }
 
   /** findSpotInCol: given column x, return y coordinate of furthest-down spot
@@ -92,8 +95,15 @@ class Game {
  * player piece.
   */
 
+class Player {
+  constructor(playerColor) {
+    this.playerColor = playerColor;
+  }
+}
+
 export {
-  Game
+  Game,
+  Player
   /*WIDTH,
   HEIGHT,
   gameState,

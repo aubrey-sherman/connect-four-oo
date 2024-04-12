@@ -1,4 +1,4 @@
-import { Game } from "./connect4.js";
+import { Game, Player } from "./connect4.js";
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
@@ -39,7 +39,7 @@ function makeHtmlBoard() {
 /** Takes HTML board and removes all elements inside of it. */
 
 function clearBoard(board) {
-  while(board.firstChild) {
+  while (board.firstChild) {
     board.firstChild.remove();
   }
 }
@@ -50,7 +50,8 @@ function clearBoard(board) {
 function placeInTable(y, x) {
   const $piece = document.createElement('div');
   $piece.classList.add('piece');
-  $piece.classList.add(`p${currGame.currPlayer}`);
+  const currPlayerColor = currGame.currPlayer.playerColor;
+  $piece.style.backgroundColor = currPlayerColor;
 
   const $spot = document.querySelector(`#c-${y}-${x}`);
   $spot.append($piece);
@@ -67,7 +68,7 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
-  if(currGame.isGameOver) return;
+  if (currGame.isGameOver) return;
 
   // get x from ID of clicked cell
   const x = Number(evt.target.id.slice("top-".length));
@@ -106,6 +107,8 @@ let currGame;
 
 function start() {
   currGame = new Game();
+  const player1 = new Player();
+  const player2 = new Player();
   makeHtmlBoard();
 }
 
