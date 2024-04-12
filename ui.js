@@ -86,7 +86,7 @@ function handleClick(evt) {
   // check for win
   if (currGame.checkForWin()) {
     currGame.isGameOver = true;
-    return endGame(`Player ${currGame.currPlayer} won!`);
+    return endGame(`Player ${currGame.currPlayer.playerName} won!`);
   }
 
   // check for tie: if top row is filled, board is filled
@@ -100,15 +100,22 @@ function handleClick(evt) {
 
 
 /** Start game. */
-const $startButton = document.querySelector('#start-btn');
-$startButton.addEventListener("click", start);
+const $gameForm = document.getElementById("game-form");
+$gameForm.addEventListener("submit", start);
 
 let currGame;
 
-function start() {
-  currGame = new Game();
-  const player1 = new Player();
-  const player2 = new Player();
+function start(evt) {
+  evt.preventDefault();
+
+  const player1Color = document.getElementById("player-1-color").value;
+  const player2Color = document.getElementById("player-2-color").value;
+
+  const player1 = new Player(player1Color, "1");
+  const player2 = new Player(player2Color, "2");
+
+  currGame = new Game(player1, player2);
+
   makeHtmlBoard();
 }
 
