@@ -5,6 +5,8 @@ import { Game } from "./connect4.js";
 function makeHtmlBoard() {
   const $htmlBoard = document.querySelector("#board");
 
+
+
   // create top row of game to hold clickable cells
   const $top = document.createElement("tr");
   $top.setAttribute("id", "column-top");
@@ -57,7 +59,7 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
-    // get x from ID of clicked cell
+  // get x from ID of clicked cell
   const x = Number(evt.target.id.slice("top-".length));
 
   // get next spot in column (if none, ignore click)
@@ -85,6 +87,9 @@ function handleClick(evt) {
 
 
 /** Start game. */
+const $startButton = document.querySelector('#start-btn');
+$startButton.addEventListener("click", start);
+
 let currGame;
 
 function start() {
