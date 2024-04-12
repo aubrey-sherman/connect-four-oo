@@ -3,7 +3,7 @@
  * player1, player2: objects holding each player's color for game.
  */
 class Game {
-  constructor(height = 6, width = 7, player1, player2) {
+  constructor(player1, player2, height = 6, width = 7) {
     this.height = height;
     this.width = width;
     this.player1 = player1;
@@ -33,7 +33,7 @@ class Game {
    *   player instance
    */
   switchCurrPlayer() {
-    this.currPlayer = this.currPlayer === player1 ? player2 : player1;
+    this.currPlayer = this.currPlayer === this.player1 ? this.player2 : this.player1;
   }
 
   /** findSpotInCol: given column x, return y coordinate of furthest-down spot
@@ -92,12 +92,13 @@ class Game {
 }
 
 /** Class for a player in Connect 4 game. Takes in color name/hex code for
- * player piece.
+ * player piece, and name of player.
   */
 
 class Player {
-  constructor(playerColor) {
+  constructor(playerColor, playerName) {
     this.playerColor = playerColor;
+    this.playerName = playerName;
   }
 }
 
