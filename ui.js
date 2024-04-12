@@ -5,7 +5,7 @@ import { Game } from "./connect4.js";
 function makeHtmlBoard() {
   const $htmlBoard = document.querySelector("#board");
 
-
+  clearBoard($htmlBoard);
 
   // create top row of game to hold clickable cells
   const $top = document.createElement("tr");
@@ -36,6 +36,14 @@ function makeHtmlBoard() {
   }
 }
 
+/** Takes HTML board and removes all elements inside of it. */
+
+function clearBoard(board) {
+  while(board.firstChild) {
+    board.firstChild.remove();
+  }
+}
+
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
@@ -59,6 +67,8 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
+  if(currGame.isGameOver) return;
+
   // get x from ID of clicked cell
   const x = Number(evt.target.id.slice("top-".length));
 
@@ -74,11 +84,13 @@ function handleClick(evt) {
 
   // check for win
   if (currGame.checkForWin()) {
+    currGame.isGameOver = true;
     return endGame(`Player ${currGame.currPlayer} won!`);
   }
 
   // check for tie: if top row is filled, board is filled
   if (currGame.board[0].every(cell => cell !== null)) {
+    currGame.isGameOver = true;
     return endGame('Tie!');
   }
 

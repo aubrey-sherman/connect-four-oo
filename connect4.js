@@ -8,6 +8,7 @@ class Game {
 
     this.board = this.makeBoard();
     this.currPlayer = 1;
+    this.isGameOver = false;
   }
 
   /** makeBoard: fill in global `board`:
@@ -61,7 +62,7 @@ class Game {
           x < this.width &&
           this.board[y][x] === this.currPlayer
       );
-    }
+    };
 
     // Old method -- Bound context to _win
     // instead of making it an arrow function.
@@ -87,6 +88,9 @@ class Game {
   }
 }
 
+/** Class for a player in Connect 4 game. Takes in color name/hex code for
+ * player piece.
+  */
 
 export {
   Game
